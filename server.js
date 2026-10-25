@@ -6,7 +6,7 @@ require('dotenv').config();
 console.log(process.env.MONGODB_URI ? 'URI loaded' : 'URI missing');
 let express  = require('express');
 let app      = express();
-let port     = process.env.PORT || 9000;
+let port     = process.env.PORT || 8080;
 const MongoClient = require('mongodb').MongoClient
 let mongoose = require('mongoose');
 let passport = require('passport');

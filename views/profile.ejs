@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Open Mic Night</title>
+    <title>What's the Move?</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
@@ -10,7 +10,7 @@
 <div class="container">
 
     <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> Profile Page</h1>
+        <h1><span class="fa fa-anchor"></span> What's the Move?</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
     </div>
 
@@ -36,7 +36,44 @@
             </div>
         </div> -->
         <div class="col-sm-6">
-          <h3>Open Mics - Philly</h3>
+            <fieldset>
+            <legend>What's the vibe tonight?</legend>
+
+                 <div>
+                 <input class="genreOption" type="checkbox" id="horror" name="genre" />
+                 <label for="horror">Horror</label>
+                 </div>
+
+                 <div>
+                 <input class="genreOption" type="checkbox" id="comedy" name="genre" />
+                 <label for="comedy">Comedy</label>
+                 </div>
+
+                 <div>
+                 <input class="genreOption" type="checkbox" id="drama" name="genre" />
+                 <label for="drama">Drama</label>
+                 </div>
+
+                 <div>
+                 <input class="genreOption" type="checkbox" id="action" name="genre" />
+                 <label for="action">Action</label>
+                 </div>
+
+                 <div>
+                 <input class="genreOption" type="checkbox" id="romance" name="genre" />
+                 <label for="romance">Romance</label>
+                 </div>
+
+                <div>
+                <button id="genrePicker" type="submit">Submit</button>
+                </div>
+
+            </fieldset>
+
+
+        </div>
+        <div class="col-sm-6">
+          <h3>Show Inputs Here</h3>
           <ul class="messages">
           <% for(var i=0; i<messages.length; i++) {%>
             <li class="message">

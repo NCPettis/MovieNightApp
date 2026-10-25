@@ -29,6 +29,26 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
+app.get('/genres', async (req, res) => {
+  const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', {
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.TMDB_API_KEY}`
+    }
+  });
+  res.json(await response.json());
+});
+
+app.get('/genresRevealed', async (req, res) => {
+  const response = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27%2C35',{
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.TMDB_API_KEY}`
+    }
+  });
+  res.json(await response.json());
+});
+
     app.post('/messages', (req, res) => {
       db.collection('messages').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
         if (err) return console.log(err)
