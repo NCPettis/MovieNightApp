@@ -2,29 +2,40 @@
 
 // set up ======================================================================
 // get all the tools we need
-var express  = require('express');
-var app      = express();
-var port     = process.env.PORT || 8080;
+require('dotenv').config();
+console.log(process.env.MONGODB_URI ? 'URI loaded' : 'URI missing');
+let express  = require('express');
+let app      = express();
+let port     = process.env.PORT || 9000;
 const MongoClient = require('mongodb').MongoClient
-var mongoose = require('mongoose');
-var passport = require('passport');
-var flash    = require('connect-flash');
+let mongoose = require('mongoose');
+let passport = require('passport');
+let flash    = require('connect-flash');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser   = require('body-parser');
-var session      = require('express-session');
+let morgan       = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser   = require('body-parser');
+let session      = require('express-session');
 
-var configDB = require('./config/database.js');
+let configDB = require('./config/database.js');
 
-var db
+let db
+console.log(port)
 
 // configuration ===============================================================
-mongoose.connect(configDB.url, (err, database) => {
+mongoose.connect(process.env.MONGODB_URI,  (err, database) => {
   if (err) return console.log(err)
   db = database
   require('./app/routes.js')(app, passport, db);
-}); // connect to our database
+  console.log("HELLO")
+});
+
+
+// mongoose.connect(configDB.url, (err, database) => {
+//   if (err) return console.log(err)
+//   db = database
+//   require('./app/routes.js')(app, passport, db);
+// }); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -39,11 +50,16 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
+// app.use(session({
+//     secret: 'rcbootcamp2021b', // session secret
+//     resave: true,
+//     saveUninitialized: true
+// }));
 app.use(session({
-    secret: 'rcbootcamp2021b', // session secret
-    resave: true,
-    saveUninitialized: true
-}));
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
