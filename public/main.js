@@ -1,3 +1,17 @@
+/**1. what's the Vibe tonight?
+ * 2. Show the first 5 options in array of movies that match?
+ * 3. User says yes or no to the 5
+ * 4. Movies with yes go to a watch list result/array in another page
+ * 5. Button for user to go and see
+ * 6. New page has table/list of the watchlist moves. maybe use a tag/user for who added it?
+ * 
+ * Uknowns:
+ * -how to add users to a group with kvp in db
+ * -how the watchlist movies aggregate (will there be duplicates from users?)
+ * -what is my delete? Can the yes/no function be a delete?
+ */
+
+
 var thumbUp = document.getElementsByClassName("fa-thumbs-up");
 var trash = document.getElementsByClassName("fa-trash");
 
@@ -45,57 +59,16 @@ Array.from(trash).forEach(function(element) {
 });
 
 document.querySelector('#genrePicker').addEventListener('click', genreFinder )
-
 async function genreFinder() {
   const checked = document.querySelectorAll("input[name='genre']:checked");
+  const genreString = [...checked].map(genre => genre.value).join(',');
   
   console.log(checked);
 
-  const res = await fetch('/genres');
-  const data = await res.json();
-  console.log(data.genres);
 
-  //If checked box input == data.genres.name then give me the id number
- const genreIds = [];
-
- for( let i = 0; i < checked.length; i++){
-
-  const box = checked[i]
-  const match = data.genres.find(
-    genre => genre.name.toLowerCase() === box.id.toLowerCase()
-  );
-
-  if(match){
-    genreIds.push(match.id);
-  }else{
-    console.log(`No genre found for ${box.id}`);
-  }
-
-  const genreString = genreIds.join(',');
-  console.log(genreString);
-
- }
-
-  //^^^^^^Search the above Array obj by name to get the genre's id - 
-
-
-  //vvvvvvInput the ID's into this fetch Req Below
-
-  const response = await fetch('/genresRevealed');
+  const response = await fetch(`/genresRevealed?genres=${encodeURIComponent(genreString)}`);
   const genresRevealed = await response.json();
   console.log(genresRevealed);
 
-//   const options = {
-//   method: 'GET',
-//   headers: {
-//     accept: 'application/json',
-//     Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzN2Y1NTM3YjMwNmZiMjEyNWRmMThkYmJiNTczMDk3YiIsIm5iZiI6MTc5Mjg5NjE0My40MDMsInN1YiI6IjZhZGQ2YzhmN2EwY2YwNzUyNTU3Njg3YyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.40e4or-xZTJUP-DJE11Gxco4bowKDfpyqnBh2PYrZpg'
-//   }
-// };
-
-// fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27%2C35', options)
-//   .then(res => res.json())
-//   .then(res => console.log(res))
-//   .catch(err => console.error(err));
 
 }

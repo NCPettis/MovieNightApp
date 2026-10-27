@@ -29,18 +29,20 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
-app.get('/genres', async (req, res) => {
-  const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', {
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${process.env.TMDB_API_KEY}`
-    }
-  });
-  res.json(await response.json());
-});
+// app.get('/genres', async (req, res) => {
+//   const response = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en', {
+//     headers: {
+//       accept: 'application/json',
+//       Authorization: `Bearer ${process.env.TMDB_API_KEY}`
+//     }
+//   });
+//   res.json(await response.json());
+// });
 
 app.get('/genresRevealed', async (req, res) => {
-  const response = await fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=27%2C35',{
+
+  const genreString = req.query.genres;
+  const response = await fetch(`https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${encodeURIComponent(genreString)}`,{
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${process.env.TMDB_API_KEY}`
