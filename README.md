@@ -8,13 +8,13 @@ Future Feature: Join your friend group and add movies to a group watchlist to de
 
 ### How It's Made:
 
-**HTML & CSS – Structure and styling**
-**JavaScript – Front-end and back-end functionality**
-**Node.js – Server-side JavaScript**
-**Express.js – Routes and handling requests**
-**MongoDB – Storing user accounts and saved pins**
-**EJS – Displaying dynamic content**
-**Passport.js – User authentication**
+*HTML & CSS – Structure and styling
+*JavaScript – Front-end and back-end functionality
+*Node.js – Server-side JavaScript
+*Express.js – Routes and handling requests
+*MongoDB – Storing user accounts and saved pins
+*EJS – Displaying dynamic content
+*Passport.js – User authentication
 
 ## Installation
 
