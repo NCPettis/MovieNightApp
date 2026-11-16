@@ -23,12 +23,12 @@ let db
 console.log(port)
 
 // configuration ===============================================================
-mongoose.connect(process.env.MONGODB_URI,  (err, database) => {
-  if (err) return console.log(err)
-  db = database
-  require('./app/routes.js')(app, passport, db);
-  console.log("HELLO")
-});
+// mongoose.connect(process.env.MONGODB_URI,  (err, database) => {
+//   if (err) return console.log(err)
+//   db = database
+//   require('./app/routes.js')(app, passport, db);
+//   console.log("HELLO")
+// });
 
 
 // mongoose.connect(configDB.url, (err, database) => {
@@ -36,6 +36,18 @@ mongoose.connect(process.env.MONGODB_URI,  (err, database) => {
 //   db = database
 //   require('./app/routes.js')(app, passport, db);
 // }); // connect to our database
+
+mongoose.connect(process.env.MONGODB_URI,{
+ useNewUrlParser: true,
+ useUnifiedTopology: true
+})
+  .then(() => {
+    db = mongoose.connection.db;
+    require('./app/routes.js')(app, passport, db);
+    app.listen(port);
+    console.log('We got MongoDB')
+  })
+  .catch(err => console.log(err))
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -57,7 +69,7 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 // }));
 app.use(session({
   secret: process.env.SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: false
 }))
 app.use(passport.initialize());
@@ -66,5 +78,5 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 
 // launch ======================================================================
-app.listen(port);
-console.log('The magic happens on port ' + port);
+// app.listen(port);
+// console.log('The magic happens on port ' + port);

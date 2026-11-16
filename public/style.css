@@ -1,7 +1,85 @@
+/* html, body{
+  height: 100%;
+  margin: 0;
+
+} */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 body{
-  padding-top:80px;
-  word-wrap:break-word;
+  overflow: hidden;
+ 
 }
-img{
-  height: 200px;
+
+.app{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  
 }
+
+header{
+  display: flex;
+  flex-direction: row;
+}
+
+h1{
+  font-size: 2em;
+}
+
+.panels{
+  flex: 1;
+  min-height: 0;
+  display: flex;
+   gap: 1rem;
+}
+
+.panel{
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panel:nth-child(2){
+  flex: 2;
+}
+
+#results {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  /* border-radius: 8px; */
+  overflow-y: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 1rem;
+}
+
+.movie-card{
+  flex: 1 1 100px;
+  max-width: 160px;
+}
+
+#results img{
+  width: 100%;
+  border-radius: 8px;
+}
+
+#watchlist{
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+:root {
+  --pico-form-element-spacing-vertical: 0.35rem;  /* Default is typically 0.75rem */
+  --pico-form-element-spacing-horizontal: 0.75rem; /* Default is typically 1rem */
+  --pico-font-size: 0.9rem;                      /* Optional: adjust base scale */
+}
+

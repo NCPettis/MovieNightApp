@@ -1,3 +1,5 @@
+// const { watch } = require("./models/user");
+
 module.exports = function(app, passport, db) {
 
 // normal routes ===============================================================
@@ -9,14 +11,48 @@ module.exports = function(app, passport, db) {
     });
 
     // PROFILE SECTION =========================
-    app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('messages').find().toArray((err, result) => {
-          if (err) return console.log(err)
-          res.render('profile.ejs', {
-            user : req.user,
-            messages: result
-          })
-        })
+    // app.get('/profile', isLoggedIn, function(req, res) {
+    //     db.collection('messages').find().toArray((err, result) => {
+    //       if (err) return console.log(err)
+    //       res.render('profile.ejs', {
+    //         user : req.user,
+    //         messages: result
+    //       })
+    //     })
+    // });
+
+    app.get('/profile', isLoggedIn, async (req, res) => {
+      try {
+        const messages = await db.collection ('messages').find().toArray();
+        const watchlist = await db.collection ('watchlist').find({ userId: req.user._id }).toArray();
+
+        res.render('profile.ejs' , {user: req.user, messages, watchlist });
+
+      } catch(err){
+        console.log(err);
+        res.sendStatus(500);
+      }
+    });
+
+    app.post('/watchlist', isLoggedIn, async (req, res) => {
+      
+        const {tmdbId, title, posterPath } = req.body;
+        const result = await db.collection ('watchlist').updateOne(
+          { userId: req.user._id, tmdbId: Number(tmdbId) },
+          { $setOnInsert: {title, posterPath}},
+          { upsert: true }
+          );
+
+          if (result.upsertedCount === 0) return res.sendStatus(409);
+          res.sendStatus (201);
+    });
+
+    app.delete('/watchlist/:tmdbId' , isLoggedIn, async (req, res) => {
+      await db.collection('watchlist').deleteOne({
+        userId: req.user._id,
+        tmdbId: Number(req.params.tmdbId)
+      });
+      res.sendStatus(204);
     });
 
     // LOGOUT ==============================

@@ -1,42 +1,22 @@
 <!doctype html>
 <html>
 <head>
-    <title>What's the Move?</title>
-    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> -->
+    <!-- <title>What's the Move?</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
+<div class="container app">
 
-    <div class="page-header text-center">
-        <h1><span class="fa fa-anchor"></span> What's the Move?</h1>
+    <header>
+        <h1><span class="fa fa-film"></span> What's the Move?</h1>
         <a href="/logout" class="btn btn-default btn-sm">Logout</a>
-    </div>
+    </header>
 
-    <div class="row">
-
-        <!-- LOCAL INFORMATION -->
-        <!-- <div class="col-sm-6">
-            <div class="well">
-                <h3><span class="fa fa-user"></span> Local</h3>
-
-                <% if (user.local.email) { %>
-                    <p>
-                        <strong>id</strong>: <%= user._id %><br>
-                        <strong>email</strong>: <%= user.local.email %><br>
-                        <strong>password</strong>: <%= user.local.password %>
-                    </p>
-
-                    <a href="/unlink/local" class="btn btn-default">Unlink</a>
-                <% } else { %>
-                    <a href="/connect/local" class="btn btn-default">Connect Local</a>
-                <% } %>
-
-            </div>
-        </div> -->
-        <div class="col-sm-6">
+    <div class="panels">
+        <div class="panel">
             <fieldset>
             <legend>What's the vibe tonight?</legend>
 
@@ -73,34 +53,28 @@
 
 
         </div>
-        <div class="col-sm-6">
-          <h3>Show Inputs Here</h3>
+        <div class="panel">
+          <h3>Results</h3>
           <section id="results"></section>
-          <!-- <ul class="messages">
-          <% for(var i=0; i<messages.length; i++) {%>
-            <li class="message">
-              <span><%= messages[i].name %></span>
-              <span><%= messages[i].msg %></span>
-              <span><%= messages[i].thumbUp %></span>
-              <span><i class="fa fa-thumbs-up" aria-hidden="true"></i></span>
-              <span><i class="fa fa-thumbs-down" aria-hidden="true"></i></span>
-              <span><i class="fa fa-trash" aria-hidden="true"></i></span>
-            </li>
-          <% } %>
-          </ul>
-
-          <h2>Add A Club</h2>
-        <% if (user.local.email) { %>
-          <form action="/messages" method="POST">
-            <!-- <input type="text" value="<%= user.local.email %>" name="name"> -->
-            <input type="text" placeholder="Club Name" name="msg">
-            <input type="text" placeholder="Address" name="msg">
-            <input type="text" placeholder="Open Mic Name" name="msg">
-            <input type="text" placeholder="Open Mic Days" name="msg">
-            <button type="submit">Submit</button>
-          </form>
+           <button id="moreMovies" type="button" hidden>Show 5 more</button>
         </div>
-        <% } %> -->
+    
+
+        <div class="panel">
+        
+          <h3>My Watchlist</h3>
+          <ul id="watchList">
+            <% watchlist.forEach(item => { %>
+            <li data-id="<%= item.tmdbId %>">
+                <%= item.title %>
+                <button type="button" class="remove" aria-label="Remove <%= item.title %> from watchlist">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+            </li>
+        <% }) %>
+          </ul>
+        </div>
+    </div>
 
 </div>
 
